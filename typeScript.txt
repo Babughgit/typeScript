@@ -1,0 +1,262 @@
+Advantages of TypeScript
+Static Typing: TypeScript enforces type-checking at compile-time, reducing potential runtime errors and making the code more predictable.
+
+Example: If you declare a variable as a number, TypeScript will alert you if you try to assign a string to it later, catching errors before code execution.
+typescript
+Copy code
+let age: number = 30;
+age = "thirty"; // Error: Type 'string' is not assignable to type 'number'
+Enhanced IDE Support: TypeScript offers better IntelliSense (code autocompletion and hints) in IDEs, making it easier to write code accurately and quickly.
+
+Example: When defining an interface for an object, the IDE will show suggestions based on that interface, making development faster and reducing typos.
+Improved Code Readability and Maintainability: Type annotations make it clearer what types are expected for function parameters, return values, and variables, making the codebase easier to understand for others (and yourself) in the future.
+
+Example:
+typescript
+Copy code
+function calculateTotal(price: number, quantity: number): number {
+  return price * quantity;
+}
+Advanced Object-Oriented Features: TypeScript includes classes, interfaces, inheritance, and access modifiers (private, public, etc.), allowing you to structure large applications with more robust object-oriented programming (OOP) principles.
+
+Example: Creating a class with an interface:
+typescript
+Copy code
+interface Car {
+  make: string;
+  model: string;
+  year: number;
+}
+
+class Sedan implements Car {
+  constructor(public make: string, public model: string, public year: number) {}
+}
+Cross-Browser Compatibility with ES6+ Features: TypeScript allows you to use modern JavaScript (ES6+) features and transpiles them down to ES5 for older browsers, letting you write modern code without worrying about compatibility.
+
+Features TypeScript Adds to JavaScript
+Type Annotations: You can specify types for variables, function parameters, and return values.
+
+Example: let name: string = "Alice";
+Interfaces and Types: Define custom types and interfaces to represent object shapes, allowing for more structured code.
+
+Example:
+typescript
+Copy code
+interface User {
+  id: number;
+  name: string;
+}
+let user: User = { id: 1, name: "Alice" };
+Enums: TypeScript supports enums, which are named constants, improving code readability and reducing the risk of errors.
+
+Example:
+typescript
+Copy code
+enum Role { Admin, User, Guest }
+let myRole: Role = Role.Admin;
+Generics: TypeScript allows you to create reusable code components with generics, which define a placeholder type for various data types.
+
+Example: Generic function for arrays:
+typescript
+Copy code
+function getItems<T>(items: T[]): T[] {
+  return items;
+}
+Modules: TypeScript supports modular code, allowing developers to split code across files and import/export functionalities. This is part of ES6, but TypeScript ensures compatibility across older platforms.
+
+Type Inference: TypeScript can infer the type of variables and function returns based on initial values, saving time while preserving type safety.
+
+Example: let amount = 100; // Inferred as number
+Access Modifiers: TypeScript provides public, private, and protected modifiers to control access levels within classes, promoting encapsulation.
+
+Example:
+typescript
+Copy code
+class Person {
+  private name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+Non-Nullable Types: TypeScript can enforce non-nullable variables, which means a variable can’t hold null or undefined unless explicitly stated, reducing potential null reference errors.
+
+Why Do We Need the TypeScript Compiler?
+The TypeScript compiler (tsc) is essential for translating TypeScript code into JavaScript. Since browsers and Node.js engines execute JavaScript, not TypeScript, tsc compiles TypeScript to JavaScript, making it runnable in any JavaScript environment. The compiler also performs type-checking during this process, catching potential errors before the code runs.
+
+What Happens When You Compile?
+When you compile TypeScript with the tsc command:
+
+Type Checking: The compiler verifies the types you've defined, catching type mismatches and errors before runtime.
+Transpilation: TypeScript code is transformed into JavaScript that can run in browsers or Node.js.
+Output: It generates one or more JavaScript files corresponding to your TypeScript files, typically alongside a tsconfig.json file that controls compiler options.
+Different Types Available in TypeScript
+TypeScript supports several types, which can be broadly categorized:
+
+Primitive Types: Basic types, similar to JavaScript:
+
+number, string, boolean, null, undefined
+Special Types:
+
+any: Allows any type of value, disabling type-checking.
+void: Used mostly for functions that do not return a value.
+unknown: A safer alternative to any where the type is not known.
+never: Represents a type that never occurs, like in functions that always throw an error.
+Complex Types:
+
+Arrays: Represented by either Type[] or Array<Type>.
+Tuples: Fixed-length arrays with specified types at each position, e.g., [string, number].
+Enums: A way to define named constants, e.g., enum Color { Red, Green, Blue }.
+Objects: Defined with specific shapes, often with interfaces or types.
+Custom Types:
+
+Interfaces: Used to define the shape of objects.
+Types: Aliases to a combination of types, often used with union or intersection types.
+Union and Intersection Types:
+
+Union (|): Allows a variable to be one of multiple types.
+Intersection (&): Combines multiple types into one.
+Why Does add('1', '2') Show an Error When Types Are Defined?
+In TypeScript, if a function is defined with specific types for its parameters, it will enforce those types strictly. For example, if add is defined as:
+
+typescript
+Copy code
+function add(x: number, y: number): number {
+  return x + y;
+}
+Calling add('1', '2') would trigger an error because TypeScript expects number arguments, not string. TypeScript's static type-checking will catch this mismatch before runtime, preventing potential errors caused by type inconsistencies.
+
+
+
+Type Inference in TypeScript
+TypeScript can often infer types based on the initial value assigned to a variable or the context in which it is used. This means that if you declare a variable with an initial value, TypeScript automatically assumes its type without explicitly defining it.
+
+Advantage of Type Inference
+Type inference saves time and keeps code concise. You don’t have to manually annotate types for every variable if TypeScript can automatically deduce them. This results in less verbose code that still benefits from TypeScript’s static type-checking.
+
+Example:
+typescript
+Copy code
+let count = 5; // TypeScript infers 'count' as 'number'
+Problem with Type Inference and Solution with Type Casting
+Sometimes, TypeScript’s inferred type doesn’t match the intended usage of the variable, especially in complex or ambiguous scenarios, like when dealing with null values or dynamic data from APIs. In such cases, you can use type casting to explicitly set the type.
+
+Example:
+typescript
+Copy code
+const input = document.getElementById("myInput"); // inferred as HTMLElement | null
+const inputElement = input as HTMLInputElement; // cast to specific type for further usage
+tsc --init
+Running tsc --init in a TypeScript project creates a tsconfig.json file. This file:
+
+Sets up the compiler options for the project.
+Specifies root files, includes/excludes, module targets, strict settings, and other options for customized TypeScript compilation.
+Strict Mode in TypeScript
+Strict mode in TypeScript enables a suite of type-checking features that make the code more reliable and less error-prone:
+
+Non-nullable types: Variables cannot be null or undefined unless explicitly allowed.
+Strict function parameters: All function parameters must match exactly as defined.
+Improved error handling: Forces better type-checking, especially with implicit any types.
+This mode is highly recommended as it helps catch bugs and enforces best practices in code.
+
+Non-null Assertion Operator (!)
+The exclamation mark (!) after a variable is the non-null assertion operator. It tells TypeScript that even though the variable might be null or undefined according to its type, you are sure it isn’t in this particular case. This operator is commonly used when working with DOM elements.
+
+Example:
+typescript
+Copy code
+const buttonElement = document.getElementById("myButton")!; // Asserts that 'buttonElement' is not null
+Why Avoid any Type
+Using any in TypeScript disables type-checking for that variable, essentially allowing it to hold any value. This goes against the purpose of TypeScript, as any bypasses safety checks, potentially allowing runtime errors to sneak in. Avoiding any encourages you to define precise types, making the code more predictable and maintainable.
+  
+  Handling Objects in TypeScript
+In TypeScript, objects are handled by defining their structure using interfaces or types. This allows TypeScript to enforce object shape, ensuring that all required properties are present and correctly typed.
+
+Example with Interface:
+
+typescript
+Copy code
+interface User {
+  id: number;
+  name: string;
+  isActive: boolean;
+}
+
+const user: User = { id: 1, name: "Alice", isActive: true };
+Example with Type:
+
+typescript
+Copy code
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+const product: Product = { id: 101, name: "Laptop", price: 999 };
+Handling Arrays in TypeScript
+Arrays in TypeScript are typed to ensure each element in the array follows a defined structure. You can use a specific type for elements in the array to enforce consistent data.
+
+Example with Array of Numbers:
+
+typescript
+Copy code
+let numbers: number[] = [1, 2, 3, 4];
+Example with Array of Objects:
+
+typescript
+Copy code
+interface Book {
+  title: string;
+  author: string;
+}
+
+let library: Book[] = [
+  { title: "1984", author: "George Orwell" },
+  { title: "To Kill a Mockingbird", author: "Harper Lee" }
+];
+type Keyword in TypeScript
+The type keyword is used to create type aliases for complex data structures or union types. It’s a flexible way to define custom types, especially for complex structures that may be reused.
+
+Example:
+typescript
+Copy code
+type ID = number | string;
+type Address = { street: string; city: string; zip: number };
+Advantage of Interfaces Over Types
+Interfaces are generally preferred over type aliases for defining object structures because they offer a few unique advantages:
+
+Extensibility: Interfaces can be extended with other interfaces, making it easier to create flexible, reusable structures.
+Merging: Interfaces allow for declaration merging, where two interfaces with the same name can combine their properties, which can be useful in large projects.
+Example of Extensibility:
+typescript
+Copy code
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  employeeId: number;
+}
+Arrays as Generics
+Arrays are generics in TypeScript, meaning you can define the type of elements they hold using a generic syntax. This ensures type safety for every item in the array.
+
+Example:
+typescript
+Copy code
+let names: Array<string> = ["Alice", "Bob", "Charlie"];
+Changing the Target to ES6
+Changing the target in tsconfig.json to ES6 allows TypeScript to use modern JavaScript features like let, const, and arrow functions, which can make code more efficient and easier to maintain. ES6 features are widely supported in modern environments, making them the default target for most TypeScript projects.
+
+Generics with Promises
+Generics allow promises to enforce a specific type for resolved values, ensuring that you know exactly what type of data will be returned when the promise resolves.
+
+Example:
+typescript
+Copy code
+function fetchData(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    resolve("Data fetched");
+  });
+}
+
+fetchData().then((data) => console.log(data)); // data is guaranteed to be a string
